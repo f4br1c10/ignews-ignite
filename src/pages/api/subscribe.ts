@@ -3,9 +3,9 @@ import { getSession } from "next-auth/react";
 import { stripe } from "../../services/stripe";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method === "POST") {
+  if (req.method === 'POST') {
     const session = await getSession({ req })
-
+    
     const stripeCustomer = await stripe.customers.create({
       email: session.user.email,
       name: session.user.name
@@ -16,7 +16,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       payment_method_types: ['card'],
       billing_address_collection: 'required',
       line_items: [
-        { price: 'price_1LVGlUDpZgJgAeZtIvHRimyU', quantity: 1 }
+        { price: 'price_1L2OrDLP2EVMWk1L2kJXsdz5', quantity: 1 }
       ],
       mode: 'subscription',
       allow_promotion_codes: true,
@@ -26,7 +26,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     return res.status(200).json({ sessionId: stripeCheckoutSession.id })
   } else {
-    res.setHeader("Allow", "POST")
-    res.status(405).end("Method not allowed")
+    res.setHeader('Allow', 'POST')
+    res.status(405).end('Method not allowed')
   }
 }
