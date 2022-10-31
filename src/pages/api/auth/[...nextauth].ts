@@ -1,4 +1,4 @@
-import { Collection, query as q } from 'faunadb'
+import { query as q } from 'faunadb'
 
 import NextAuth from "next-auth"
 import GithubProvider from "next-auth/providers/github"
@@ -14,13 +14,12 @@ export default NextAuth({
         params: {
           scope: 'read:user'
         }
-      }
+      },
     }),
-  ],
+  ], 
   jwt: {
-    secret: process.env.SIGNING_KEY
-  }
-  ,
+    secret: process.env.SIGNING_KEY,
+  },
   callbacks: {
     async signIn({ user, account, profile }) {
       const { email } = user
